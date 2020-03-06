@@ -1,4 +1,6 @@
-const timeout = 5000
+const expectPuppeteer = require('expect-puppeteer')
+
+const timeout = 25000
 
 let webOrigin = ''
 
@@ -14,7 +16,7 @@ describe(
     let page
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
-      await page.goto(webOrigin)
+      await page.goto(webOrigin + '/about')
     }, timeout)
 
     afterAll(async () => {
@@ -23,8 +25,11 @@ describe(
 
     it('should load without error', async () => {
       let text = await page.evaluate(() => document.body.textContent)
-      expect(text).toContain('Podverse')
-    })
+      await expect(text).toContain('Podverse')
+      await expectPuppeteer(page).toClick('.view__navbar .dropdown')
+
+      await page.waitFor(10000)
+    }, 50000)
   },
   timeout
 )

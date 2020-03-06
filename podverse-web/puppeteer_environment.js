@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== 'stage') {
   require('dotenv').config({ path: '.env' })
 }
+console.log(process.env.NODE_ENV)
 
 const chalk = require('chalk')
 const NodeEnvironment = require('jest-environment-node')
